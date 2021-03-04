@@ -1,7 +1,7 @@
 class_name Tile extends Sprite
 
 enum BITMASK_TYPE {
-	S, W, N, E, N_E_W_S
+	S, W, N, E, N_E_W_S, NONE,
 }
 
 var relative_groups = [
@@ -65,7 +65,30 @@ func fill_gaps(end_pos : Vector2, start_pos : Vector2, color : Color) -> void:
 			err += dx
 			y += sy
 
-			
+func fill_pixels_by_sections(sections: Array):
+	self.data.lock()
+	print(sections)
+	for section in sections:
+		var position = section[0]
+		var part = section[1]
+		var start_x = int(position.x)
+		var start_y = int(position.y)
+		var end_x = int(size.x / 3) 
+		var end_y = int(size.y / 3)
+		
+
+		part.lock()
+		for x in end_x:
+			for y in end_y:
+				data.set_pixel(x + start_x, y + start_y, part.get_pixel(x , y))
+		part.unlock()
+	self.data.unlock()
+	update_texture()
+		
+		
+		
+		
+	
 			
 			
 			

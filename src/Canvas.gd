@@ -16,6 +16,7 @@ var previous_mouse_position = Vector2.ZERO
 var previous_hovored_slot = null
 var tile_size = Vector2() 
 var selected_tile : Tile = null
+var tile = null
 
 
 func _ready():
@@ -26,19 +27,69 @@ func generate_template(tile_size):
 	
 	self.tile_size = tile_size
 	
-	for y in tile_template.size():
-		for x in tile_template[y].size():
-			var template_id = tile_template[y][x]
-			if template_id == 1:
-				var tile = Tile.new(tile_size, BitmaskManager.get_bitmask_type(Vector2(x, y)))
-				tile.position = Vector2(x, y) * tile_size
-				add_child(tile)
-				tiles.push_back(tile)
-	
-	for tile in tiles:
-		tile.relatives = BitmaskManager.get_relatives(tile, tiles)
+	var tile = Tile.new(tile_size, Tile.BITMASK_TYPE.NONE)
+	add_child(tile)
+	self.tile = tile
 	
 	set_process_input(true)
+
+func process_next_step():
+	var data : Image = tile.data
+	var northTile = Tile.new(tile_size, Tile.BITMASK_TYPE.S)
+	northTile.fill_pixels_by_sections(get_section_of_data(data, [0, 1, 2, 3, 4, 5, 3, 4, 5]))
+	add_child(northTile)
+	northTile.position = Vector2(0, -17)
+	
+	
+func get_section_of_data(data, sections):
+	var new_sections = []
+	data.lock()
+	for i in range(sections.size()):
+		var section = sections[i]
+		var start_position = Vector2.ZERO
+		match section:
+			0: start_position = Vector2.ZERO
+			1: start_position = Vector2(1, 0)
+			2: start_position = Vector2(2, 0)
+			3: start_position = Vector2(0, 1)
+			4: start_position = Vector2(1, 1)
+			5: start_position = Vector2(2, 1)
+			6: start_position = Vector2(0, 2)
+			7: start_position = Vector2(1, 2)
+			8: start_position = Vector2(2, 2)
+			
+		var part_placement = Vector2.ZERO
+		
+		match i:
+			0: part_placement = Vector2.ZERO
+			1: part_placement = Vector2(1, 0)
+			2: part_placement = Vector2(2, 0)
+			3: part_placement = Vector2(0, 1)
+			4: part_placement = Vector2(1, 1)
+			5: part_placement = Vector2(2, 1)
+			6: part_placement = Vector2(0, 2)
+			7: part_placement = Vector2(1, 2)
+			8: part_placement = Vector2(2, 2)
+		
+		var part = Image.new()
+		var part_width = int(tile_size.x / 3)
+		var part_height = int(tile_size.y / 3)
+		
+		part.create(part_width, part_height, false, Image.FORMAT_RGBA8)
+		part.lock()
+		for x in part_width:
+			for y in part_height:
+				print(x + start_position.x * part_width)
+				part.set_pixel(x, y, data.get_pixel(x + start_position.x * part_width, y + start_position.y * part_height))
+		
+		part.unlock()
+		new_sections.push_back([Vector2(part_placement * Vector2(part_width, part_height)), part])
+	data.unlock()
+	return new_sections
+				
+				
+		
+	
 
 func _process(delta):
 	update()
@@ -109,15 +160,7 @@ func get_hovered_bitmask():
 	var pos = (local_tile_position / tile_size * 3).floor()
 	return Bitmask.new(pos, (tile_size / 3).floor())
 	
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-	
-	
+
+
+func _on_ContinueButton_pressed():
+	process_next_step()

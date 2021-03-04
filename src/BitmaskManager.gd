@@ -23,10 +23,6 @@ func get_bitmask_type(array_position, tile_template):
 	assert("Couldnt find shit.")
 
 
-func process_relative_tiles(selected_tile):
-	match tile.type:
-		Tile.BITMASK_TYPE.S:
-			
 	
 	
 	

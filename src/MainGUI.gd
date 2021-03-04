@@ -6,7 +6,7 @@ onready var border_size_input = $VBoxContainer/CenterContainer/ToolContainer/Pan
 
 
 func _on_GenerateButton_pressed():
-	canvas.generate_template(Vector2(16, 16))
+	canvas.generate_template(Vector2(15, 15))
 	
 	
 	
