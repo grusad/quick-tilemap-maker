@@ -158,7 +158,7 @@ script = ExtResource( 3 )
 
 [node name="Camera" type="Camera2D" parent="VBoxContainer/CenterContainer/HSplitContainer/ViewportContainer/Viewport"]
 current = true
-zoom = Vector2( 0.1, 0.1 )
+zoom = Vector2( 0.25, 0.25 )
 script = ExtResource( 2 )
 
 [node name="InspectorContainer" type="Panel" parent="VBoxContainer/CenterContainer/HSplitContainer"]

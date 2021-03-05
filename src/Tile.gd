@@ -11,21 +11,23 @@ var relative_groups = [
 var data : Image = null
 var size = Vector2()
 var bitmask_type = null
-var relatives = []
 
-func _init(size, bitmask_type):
+func _init(size, bitmask_type, sections : Array = []):
 	self.size = size
 	self.bitmask_type = bitmask_type
-	self.relatives = relatives
 	self.show_behind_parent = true
 	data = Image.new()
 	data.create(size.x, size.y, false, Image.FORMAT_RGBA8)
-	data.lock()
-	for x in size.x:
-		for y in size.y:
-			data.set_pixel(x, y, Color.white)
-	data.unlock()
-	update_texture()
+	if not sections.empty():
+		fill_pixels_by_sections(sections)
+	else:
+		
+		data.lock()
+		for x in size.x:
+			for y in size.y:
+				data.set_pixel(x, y, Color.white)
+		data.unlock()
+		update_texture()
 
 func update_texture():
 	var image_texture = ImageTexture.new()

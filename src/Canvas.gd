@@ -17,6 +17,7 @@ var previous_hovored_slot = null
 var tile_size = Vector2() 
 var selected_tile : Tile = null
 var tile = null
+var border_width = 2
 
 
 func _ready():
@@ -34,11 +35,29 @@ func generate_template(tile_size):
 	set_process_input(true)
 
 func process_next_step():
-	var data : Image = tile.data
-	var northTile = Tile.new(tile_size, Tile.BITMASK_TYPE.S)
-	northTile.fill_pixels_by_sections(get_section_of_data(data, [0, 1, 2, 3, 4, 5, 3, 4, 5]))
+	var data : Image = tile.data 
+	var offset = Vector2(40, 0)
+	var northTile = Tile.new(tile_size, Tile.BITMASK_TYPE.S, get_section_of_data(data, [0, 1, 2, 3, 4, 5, 3, 4, 5]))
 	add_child(northTile)
-	northTile.position = Vector2(0, -17)
+	northTile.position = Vector2(0, -17) + offset
+	
+	var southTile = Tile.new(tile_size, Tile.BITMASK_TYPE.N, get_section_of_data(data, [3, 4, 5, 3, 4, 5, 6, 7, 8]))
+	add_child(southTile)
+	southTile.position = Vector2(0, 17) + offset
+	
+	var westTile = Tile.new(tile_size, Tile.BITMASK_TYPE.E, get_section_of_data(data, [0, 1, 1, 3, 4, 4, 6, 7, 7]))
+	add_child(westTile)
+	westTile.position = Vector2(-17, 0) + offset
+	
+	var centerTile = Tile.new(tile_size, Tile.BITMASK_TYPE.N_E_W_S, get_section_of_data(data, [8, 4, 6, 4, 4, 4, 2, 4, 0]))
+	add_child(centerTile)
+	centerTile.position = Vector2.ZERO + offset
+	
+	
+	var eastTile = Tile.new(tile_size, Tile.BITMASK_TYPE, get_section_of_data(data, [1, 1, 2, 4, 4, 5, 7, 7, 8]))
+	add_child(eastTile)
+	eastTile.position = Vector2(17, 0) + offset
+	
 	
 	
 func get_section_of_data(data, sections):
@@ -95,7 +114,7 @@ func _process(delta):
 	update()
 
 func _input(event):
-
+	print(event)
 	if not event is InputEventMouse:
 		return
 	
@@ -131,7 +150,10 @@ func _draw():
 		#draw_bitmasks_hint()
 		
 func draw_selected_tile_hint():
-	draw_rect(Rect2(selected_tile.position - selected_tile.size / 2, selected_tile.size), Color.blue, false, 1.0, true)
+	var draw_start = selected_tile.position - selected_tile.size / 2
+	var draw_end = selected_tile.size
+	draw_rect(Rect2(draw_start, draw_end), Color.blue, false, 1.0, true)
+	draw_rect(Rect2(draw_start + Vector2(border_width, border_width), draw_end - (Vector2(border_width * 2, border_width * 2))), Color.blue, false, 1.0, true)
 
 func draw_bitmasks_hint():
 	var bitmask = get_hovered_bitmask()

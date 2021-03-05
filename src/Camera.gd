@@ -24,8 +24,12 @@ func _input(event):
 		elif event.button_index == BUTTON_WHEEL_DOWN:
 			zoom_camera(1, viewport_container.get_local_mouse_position())
 	
+	if event is InputEventMagnifyGesture:
+		zoom_camera(event.factor, viewport_container.get_local_mouse_position())
+	
 	if event is InputEventMouseMotion and drag:
 		offset = offset - event.relative * zoom
+	
 
 func zoom_camera(dir, mouse_position):
 	var viewport_size = viewport_container.rect_size
