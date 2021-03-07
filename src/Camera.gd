@@ -25,7 +25,8 @@ func _input(event):
 			zoom_camera(1, viewport_container.get_local_mouse_position())
 	
 	if event is InputEventMagnifyGesture:
-		zoom_camera(event.factor, viewport_container.get_local_mouse_position())
+		var force = (1 - event.factor) * 3
+		zoom_camera(force, viewport_container.get_local_mouse_position())
 	
 	if event is InputEventMouseMotion and drag:
 		offset = offset - event.relative * zoom

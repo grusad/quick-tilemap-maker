@@ -4,24 +4,21 @@ enum BITMASK_TYPE {
 	S, W, N, E, N_E_W_S, NONE,
 }
 
-var relative_groups = [
-	[BITMASK_TYPE.S, BITMASK_TYPE.W, BITMASK_TYPE.N, BITMASK_TYPE.E]
-]
-
 var data : Image = null
 var size = Vector2()
 var bitmask_type = null
+var border_size = 0
 
-func _init(size, bitmask_type, sections : Array = []):
+func _init(size, border_size, bitmask_type, sections : Array = []):
 	self.size = size
 	self.bitmask_type = bitmask_type
+	self.border_size = border_size
 	self.show_behind_parent = true
 	data = Image.new()
 	data.create(size.x, size.y, false, Image.FORMAT_RGBA8)
 	if not sections.empty():
 		fill_pixels_by_sections(sections)
 	else:
-		
 		data.lock()
 		for x in size.x:
 			for y in size.y:
@@ -69,7 +66,6 @@ func fill_gaps(end_pos : Vector2, start_pos : Vector2, color : Color) -> void:
 
 func fill_pixels_by_sections(sections: Array):
 	self.data.lock()
-	print(sections)
 	for section in sections:
 		var position = section[0]
 		var part = section[1]

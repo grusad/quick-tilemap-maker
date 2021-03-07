@@ -9,10 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "Bitmask",
+"base": "VBoxContainer",
+"class": "Settings",
 "language": "GDScript",
-"path": "res://src/Bitmask.gd"
+"path": "res://src/Settings.gd"
+}, {
+"base": "Node",
+"class": "Stage",
+"language": "GDScript",
+"path": "res://Stage.gd"
+}, {
+"base": "Stage",
+"class": "StageOne",
+"language": "GDScript",
+"path": "res://StageOne.gd"
+}, {
+"base": "Stage",
+"class": "StageTwo",
+"language": "GDScript",
+"path": "res://StageTwo.gd"
 }, {
 "base": "Sprite",
 "class": "Tile",
@@ -20,7 +35,10 @@ _global_script_classes=[ {
 "path": "res://src/Tile.gd"
 } ]
 _global_script_class_icons={
-"Bitmask": "",
+"Settings": "",
+"Stage": "",
+"StageOne": "",
+"StageTwo": "",
 "Tile": ""
 }
 
@@ -29,11 +47,6 @@ _global_script_class_icons={
 config/name="Random Tile Generator"
 run/main_scene="res://src/MainGUI.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-Globals="*res://src/Globals.gd"
-BitmaskManager="*res://src/BitmaskManager.gd"
 
 [importer_defaults]
 

@@ -3,7 +3,7 @@
 [ext_resource path="res://src/MainGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/Camera.gd" type="Script" id=2]
 [ext_resource path="res://src/Canvas.gd" type="Script" id=3]
-[ext_resource path="res://src/Viewport.gd" type="Script" id=4]
+[ext_resource path="res://src/Settings.gd" type="Script" id=4]
 
 [node name="MainGUI" type="Control"]
 anchor_right = 1.0
@@ -82,52 +82,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToolContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer"]
+[node name="Settings" type="VBoxContainer" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 113.0
 margin_bottom = 107.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings"]
 margin_right = 106.0
 margin_bottom = 52.0
 columns = 2
 
-[node name="TileSizeLabel" type="Label" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/GridContainer"]
+[node name="TileSizeLabel" type="Label" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/GridContainer"]
 margin_top = 5.0
 margin_right = 43.0
 margin_bottom = 19.0
 text = "Tile"
 
-[node name="TileSizeInput" type="LineEdit" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/GridContainer"]
+[node name="TileSizeInput" type="LineEdit" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/GridContainer"]
 margin_left = 47.0
 margin_right = 105.0
 margin_bottom = 24.0
 text = "16"
 
-[node name="BorderSizeLabel" type="Label" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/GridContainer"]
+[node name="BorderSizeLabel" type="Label" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/GridContainer"]
 margin_top = 33.0
 margin_right = 43.0
 margin_bottom = 47.0
 text = "Border"
 
-[node name="BorderSizeInput" type="LineEdit" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/GridContainer"]
+[node name="BorderSizeInput" type="LineEdit" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/GridContainer"]
 margin_left = 47.0
 margin_top = 28.0
 margin_right = 105.0
 margin_bottom = 52.0
 text = "2"
 
-[node name="GenerateButton" type="Button" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer"]
+[node name="GenerateButton" type="Button" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings"]
 margin_top = 56.0
 margin_right = 106.0
 margin_bottom = 76.0
 text = "Generate"
 
-[node name="ContinueButton" type="Button" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer"]
+[node name="ContinueButton" type="Button" parent="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings"]
 margin_top = 80.0
 margin_right = 106.0
 margin_bottom = 100.0
@@ -151,7 +152,6 @@ stretch = true
 size = Vector2( 752, 536 )
 handle_input_locally = false
 render_target_update_mode = 3
-script = ExtResource( 4 )
 
 [node name="Canvas" type="Node2D" parent="VBoxContainer/CenterContainer/HSplitContainer/ViewportContainer/Viewport"]
 script = ExtResource( 3 )
@@ -227,5 +227,5 @@ margin_bottom = 27.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/GenerateButton" to="." method="_on_GenerateButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/ToolContainer/ContinueButton" to="VBoxContainer/CenterContainer/HSplitContainer/ViewportContainer/Viewport/Canvas" method="_on_ContinueButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/GenerateButton" to="." method="_on_GenerateButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ToolContainer/PanelContainer/Settings/ContinueButton" to="." method="_on_ContinueButton_pressed"]
